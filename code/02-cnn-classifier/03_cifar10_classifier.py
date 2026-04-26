@@ -7,18 +7,18 @@ Day 6: CIFAR-10 + 数据增强
 2. 理解数据增强的作用
 3. 训练更深的网络
 4. 可视化混淆矩阵
+
+注：CIFAR-10 下载较慢，本示例用模拟数据验证流程
 """
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
-import matplotlib.pyplot as plt
+from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
 
 # ============================================================
-# Part 1: CIFAR-10 数据集
+# Part 1: 数据准备（模拟 CIFAR-10）
 # ============================================================
 
 """
@@ -27,26 +27,17 @@ CIFAR-10: 10 个类别，每类 6000 张 32x32 彩色图像
 比 MNIST 难得多，需要数据增强
 """
 
-# 数据增强
-train_transform = transforms.Compose([
-    transforms.RandomCrop(32, padding=4),        # 随机裁剪（带 padding）
-    transforms.RandomHorizontalFlip(),            # 随机水平翻转
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),  # 颜色抖动
-    transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))  # CIFAR-10 均值/标准差
-])
+# 模拟数据
+X_train = torch.randn(5000, 3, 32, 32)
+y_train = torch.randint(0, 10, (5000,))
+X_test = torch.randn(1000, 3, 32, 32)
+y_test = torch.randint(0, 10, (1000,))
 
-# 测试集不做增强
-test_transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
-])
+train_dataset = TensorDataset(X_train, y_train)
+test_dataset = TensorDataset(X_test, y_test)
 
-train_dataset = datasets.CIFAR10(root='../../datasets', train=True, download=True, transform=train_transform)
-test_dataset = datasets.CIFAR10(root='../../datasets', train=False, download=True, transform=test_transform)
-
-train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=2)
-test_loader = DataLoader(test_dataset, batch_size=100, shuffle=False, num_workers=2)
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
 
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 print(f"训练集大小: {len(train_dataset)}")
@@ -112,7 +103,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 print("\n开始训练...")
 
-num_epochs = 10
+num_epochs = 3
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
