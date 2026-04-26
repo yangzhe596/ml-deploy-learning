@@ -1,0 +1,38 @@
+# Model files
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.bin
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Data
+datasets/
+*.zip
+*.tar.gz
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+runs/
+
+# Environment
+.env

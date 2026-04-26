@@ -1,5 +1,68 @@
 # ML Deploy Learning - AI 协作规范
 
+**Generated:** 2026-04-26
+**Commit:** a19a818
+**Branch:** master
+
+## OVERVIEW
+
+60 天 ML 模型部署学习项目。从 PyTorch 基础到 YOLOv8 目标检测模型的完整部署流程：训练 → ONNX → TensorRT → 量化 → CUDA 算子 → 端到端部署。核心栈：Python, PyTorch, Ultralytics, ONNX, TensorRT, CUDA/C++。
+
+## STRUCTURE
+
+```
+ml-deploy-learning/
+├── AGENTS.md              # AI 协作规范 + 项目知识库
+├── README.md              # 项目说明 + 环境配置
+├── plans/daily-plan.md    # 60 天学习计划（含进度跟踪）
+├── code/
+│   ├── 01-pytorch-basics/     # Stage 1: 张量、数据加载、训练循环
+│   ├── 02-cnn-classifier/     # Stage 1: CNN 分类器
+│   ├── 03-onnx-export/        # Stage 3: ONNX 导出
+│   ├── 04-tensorrt-basics/    # Stage 4: TensorRT 部署
+│   ├── 05-object-detection/   # Stage 2: YOLOv8 目标检测
+│   ├── 06-model-quantization/ # Stage 5: 模型量化
+│   ├── 07-custom-operators/   # Stage 6: 自定义 CUDA 算子
+│   └── 08-final-project/      # Stage 7: 端到端部署项目
+├── datasets/              # 数据集存放
+├── models/                # 保存的模型文件
+├── notes/                 # 学习笔记
+└── yolov8n.pt             # YOLOv8n 预训练权重
+```
+
+## WHERE TO LOOK
+
+| 任务 | 位置 | 说明 |
+|------|------|------|
+| 每日学习计划 | `plans/daily-plan.md` | 含进度跟踪表 |
+| 环境配置 | `README.md` | conda 环境 ml-deploy |
+| 当前学习代码 | `code/01-pytorch-basics/` | Stage 1 进行中 |
+| 模型保存 | `models/` | 训练产出存放 |
+| 学习笔记 | `notes/` | 学习者自行记录 |
+
+## COMMANDS
+
+```bash
+# 激活环境
+conda activate ml-deploy
+
+# 运行当天代码
+python code/01-pytorch-basics/01_tensor_autograd.py
+
+# 环境验证
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+## ANTI-PATTERNS (THIS PROJECT)
+
+- 禁止提前创建下一天代码（验证通过后才推进）
+- 禁止 TODO 列表添加非当天任务
+- 禁止直接给完整代码（除非模式 B 或明确要求）
+- 禁止跳过基础阶段
+- 禁止跨阶段引入知识
+
+---
+
 ## 学习理念
 
 **苏格拉底式引导学习**：AI 通过提问引导思考，而非直接给出答案。
