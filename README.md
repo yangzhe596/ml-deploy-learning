@@ -49,29 +49,145 @@ ml-deploy-learning/
 └── notes/                    # 学习笔记
 ```
 
-## 环境要求
+## 环境配置
 
-### 基础环境
-- Python 3.8+
-- PyTorch 2.0+
-- CUDA 11.8+（如果有的话）
-- ONNX Runtime
-- TensorRT 8.6+（NVIDIA GPU）
+### 已搭建环境（2026-04-26）
 
-### 推荐安装
+**环境名称**：`ml-deploy`（conda 环境）
+
+| 项目 | 版本 |
+|------|------|
+| OS | Debian 13 (trixie) |
+| GPU | NVIDIA GeForce RTX 3090 (24GB) |
+| NVIDIA Driver | 595.58.03 |
+| CUDA (driver) | 13.2 |
+| Conda | miniforge3 26.1.1 |
+| Python | 3.11.15 (conda-forge) |
+| PyTorch | 2.11.0+cu130 |
+| TorchVision | 0.26.0+cu130 |
+| TorchAudio | 2.11.0+cu130 |
+| ONNX | 1.21.0 |
+| ONNX Runtime GPU | 1.25.0 (CUDA + TensorRT providers) |
+| ONNX Sim | 0.4.36 |
+| Ultralytics | 8.4.41 |
+| OpenCV | 4.13.0 |
+| NumPy | 2.4.4 |
+| Matplotlib | 3.10.9 |
+| TensorBoard | 2.20.0 |
+| Jupyter | 5.9.1 |
+| TensorRT | ⬜ 未安装（Stage 4 再装） |
+
+### 使用环境
+
+环境已搭建完成，直接激活即可使用：
+
 ```bash
-# PyTorch（根据你的 CUDA 版本选择）
-pip install torch torchvision torchaudio
+# 激活 conda 环境
+conda activate ml-deploy
 
-# ONNX 相关
-pip install onnx onnxruntime onnxsim
+# 验证环境
+python -c "
+import torch
+print(f'PyTorch: {torch.__version__}')
+print(f'CUDA: {torch.cuda.is_available()}')
+print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"N/A\"}')
 
-# TensorRT（需要从 NVIDIA 官网下载）
-# pip install tensorrt  # 或使用 .whl 安装
+import onnxruntime as ort
+print(f'ONNX Runtime providers: {ort.get_available_providers()}')
 
-# 其他工具
-pip install matplotlib pillow numpy opencv-python
+from ultralytics import YOLO
+print('Ultralytics: OK')
+"
 ```
+
+### 环境搭建记录（已完成）
+
+如需重新搭建环境，可参考以下步骤：
+
+```bash
+# 1. 创建 conda 环境
+conda create -n ml-deploy python=3.11 -y
+conda activate ml-deploy
+
+# 2. 安装 PyTorch（从 PyTorch 官方索引，自动匹配 CUDA 版本）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# 3. 安装 ONNX 相关（先装 cmake，onnxsim 编译依赖它）
+pip install cmake
+pip install onnx onnxruntime-gpu onnxsim
+
+# 4. 安装 YOLOv8
+pip install ultralytics
+
+# 5. 安装其他工具
+pip install matplotlib pillow numpy opencv-python-headless tensorboard jupyter
+```
+
+> **注意**：PyTorch + CUDA 包较大（~2GB），下载慢时可耐心等待或使用代理。
+> `onnxsim` 需要 cmake 来编译，务必先装 cmake。
+
+### TensorRT 安装（Stage 4 时再装）
+
+TensorRT 需要从 NVIDIA 官网下载，安装较复杂，建议在学习到 Stage 4 时再配置：
+
+```bash
+# 方式 1：pip 安装（如果可用）
+pip install tensorrt
+
+# 方式 2：从 NVIDIA 官网下载 .tar 或 .deb 安装
+# 参考：https://docs.nvidia.com/deeplearning/tensorrt/install-guide/
+```
+
+## 学习流程
+
+### 两种学习模式
+
+根据学习进度和时间，选择合适的模式：
+
+#### 模式 A：自己写代码
+
+1. **AI 给任务描述**：只告诉你要做什么，不给代码
+2. **你先尝试**：自己写代码，写完贴给 AI
+3. **AI 给反馈**：指出问题，给提示，不直接给答案
+4. **验证运行**：运行代码，确认结果正确
+
+**适用场景**：时间充裕，想深入理解
+
+#### 模式 B：学习已写代码（默认，推荐）
+
+1. **AI 写完整代码**：包含详细注释
+2. **你阅读理解**：逐行阅读，理解每行代码的作用
+3. **AI 提问验证**：通过提问确认你理解了关键概念
+4. **验证运行**：运行代码，确认结果正确
+
+**适用场景**：时间紧张，快速掌握核心概念
+
+### 每日学习流程
+
+```
+1. 回顾（5 分钟）
+   └── 回顾前一天的内容
+
+2. 学习（40 分钟）
+   ├── 选择学习模式（A 或 B）
+   ├── 按模式流程学习
+   └── 记录问题和笔记
+
+3. 验证（10 分钟）
+   ├── 运行代码验证结果
+   └── 回答 AI 的验证问题
+
+4. 记录（5 分钟）
+   └── 在 notes/ 目录记录关键知识点
+```
+
+### 验证标准
+
+每完成一天的学习，确保你能回答以下问题：
+- 这个知识点的核心概念是什么？
+- 代码中每一行的作用是什么？
+- 如果修改某个参数，会发生什么？
+- 这个知识点和前面学过的有什么关联？
 
 ## 学习建议
 

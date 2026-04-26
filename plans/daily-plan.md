@@ -13,6 +13,38 @@
 4. **CUDA 时间充足**：12 天，从 kernel 到 NMS 有足够缓冲
 5. **利用你的背景**：C++ 部分加速推进，仿真图像作为检测输入
 
+## 学习流程
+
+### 两种学习模式
+
+#### 模式 A：自己写代码
+
+1. AI 给任务描述，不给代码
+2. 你先尝试，写完贴给 AI
+3. AI 给反馈和提示，不直接给答案
+4. 运行验证结果
+
+#### 模式 B：学习已写代码（默认，推荐）
+
+1. AI 写完整代码（含详细注释）
+2. 你逐行阅读理解
+3. AI 通过提问验证理解
+4. 运行验证结果
+
+### 每日流程
+
+```
+回顾（5 分钟）→ 学习（40 分钟）→ 验证（10 分钟）→ 记录（5 分钟）
+```
+
+### 验证标准
+
+完成每天学习后，确保能回答：
+- 核心概念是什么？
+- 每行代码的作用？
+- 修改参数会怎样？
+- 和前面知识的关联？
+
 ---
 
 ## 第一阶段：PyTorch 基础（第 1 周，7 天）
@@ -508,17 +540,36 @@ Day 59-60 作为缓冲，用于：
 
 ---
 
-## 环境准备清单（开始前完成）
+## 环境准备（已完成）
 
-- [ ] Python 3.8+，pip install torch torchvision torchaudio
-- [ ] CUDA toolkit（匹配 PyTorch CUDA 版本）
-- [ ] cuDNN
-- [ ] pip install onnx onnxruntime onnxsim
-- [ ] TensorRT（从 NVIDIA 官网下载，匹配 CUDA 版本）
-- [ ] pip install ultralytics
-- [ ] pip install opencv-python matplotlib numpy
-- [ ] pip install labelimg（标注工具，Day 13 用）
-- [ ] nvidia-smi 确认 GPU 可用
+**环境名称**：`ml-deploy`（conda 环境）
+
+环境已搭建完成，包含以下组件：
+- [x] Python 3.11.15 (conda-forge)
+- [x] PyTorch 2.11.0+cu130
+- [x] TorchVision 0.26.0+cu130
+- [x] TorchAudio 2.11.0+cu130
+- [x] CUDA toolkit（匹配 PyTorch CUDA 版本）
+- [x] cuDNN
+- [x] ONNX 1.21.0
+- [x] ONNX Runtime GPU 1.25.0
+- [x] ONNX Sim 0.4.36
+- [x] Ultralytics 8.4.41
+- [x] OpenCV 4.13.0
+- [x] NumPy 2.4.4
+- [x] Matplotlib 3.10.9
+- [x] TensorBoard 2.20.0
+- [x] Jupyter 5.9.1
+- [x] nvidia-smi 确认 GPU 可用
+
+**使用环境**：
+```bash
+conda activate ml-deploy
+```
+
+**待安装**：
+- [ ] TensorRT（Stage 4 时安装）
+- [ ] labelimg（Day 13 标注工具）
 
 ## 学习资源
 
